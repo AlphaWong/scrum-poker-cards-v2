@@ -1,0 +1,131 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-styles/default-theme.html">
+<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+<dom-module id="my-view1">
+    <template>
+        <style include="shared-styles">
+        :host {
+            display: block;
+            padding-top: 10%;
+        }
+        
+        .cards {
+            /*margin-top: 20%;*/
+            @apply(--layout-horizontal);
+            @apply(--layout-center-justified);
+            @apply(--layout-wrap);
+        }
+        
+        paper-card.card {
+            flex: 1;
+            flex-basis: 25%;
+            max-width: 25%;
+            width: 100%;
+            text-align: center;
+            padding: 0px;
+            height: 5rem;
+            margin: 10px;
+            @apply(--layout-vertical);
+            @apply(--layout-center-justified);
+        }
+        
+        .size-position {
+            margin: 0px;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            height: 100%;
+            position: fixed;
+            overflow: auto;
+            max-height: auto;
+        }
+        
+        .contianer {
+            height: 100%;
+            @apply(--layout-vertical);
+            @apply(--layout-center-justified);
+            margin: 0px !important;
+        }
+        
+        .number {
+            @apply(--paper-font-display4);
+            @apply(--layout-flex);
+            text-align: center;
+        }
+        
+        .button {
+            @apply(--layout-flex);
+            text-align: center;
+        }
+        
+        main {
+            @apply(--layout-vertical);
+        }
+        </style>
+        <section class="cards">
+            <template is="dom-repeat" items="[[numbers]]" as='number'>
+                <paper-card class="card" on-tap="_openDialog">
+                    <div class="card-content">
+                        [[number]]
+                    </div>
+                </paper-card>
+            </template>
+            <paper-dialog id="dialog" class="size-position" on-tap="_closeDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+                <div class="contianer">
+                    <section>
+                        <section class="number">
+                            [[currentNumber]]
+                        </section>
+                    </section>
+                </div>
+            </paper-dialog>
+        </section>
+    </template>
+    <script>
+    class MyView1 extends Polymer.Element {
+        static get is() {
+            return 'my-view1';
+        }
+
+        static get properties() {
+            return {
+                numbers: {
+                    type: Array,
+                    value() {
+                        return ['0', '1/2', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?'];
+                    }
+                },
+                currentNumber: {
+                    type: String
+                }
+            }
+        }
+
+        _openDialog(e) {
+            this.set('currentNumber', e.model.number);
+            this.$.dialog.open();
+        }
+
+        _closeDialog(e) {
+            this.set('currentNumber', '');
+            this.$.dialog.close();
+        }
+    }
+    window.customElements.define(MyView1.is, MyView1);
+    </script>
+</dom-module>
