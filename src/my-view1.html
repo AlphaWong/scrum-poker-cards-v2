@@ -14,8 +14,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-styles/default-theme.html">
+
+<!-- <link rel="import" href="https://polygit.org/polymer+v2.0.0-rc.2/webcomponentsjs+v1.0.0-rc.7/shadycss+webcomponents+v1.0.0-rc.1/paper*+:2.0-preview/iron*+:2.0-preview/app*+:2.0-preview/components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="https://polygit.org/polymer+v2.0.0-rc.2/webcomponentsjs+v1.0.0-rc.7/shadycss+webcomponents+v1.0.0-rc.1/paper*+:2.0-preview/iron*+:2.0-preview/app*+:2.0-preview/components/neon-animation/animations/fade-out-animation.html"> -->
 <link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
 <link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.2.2/web-animations-next-lite.min.js"></script>
 <dom-module id="my-view1">
     <template>
         <style include="shared-styles">
@@ -85,47 +89,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </div>
                 </paper-card>
             </template>
-            <paper-dialog id="dialog" class="size-position" on-tap="_closeDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-                <div class="contianer">
-                    <section>
-                        <section class="number">
-                            [[currentNumber]]
-                        </section>
-                    </section>
-                </div>
-            </paper-dialog>
-        </section>
+    <paper-dialog id="dialog" class="size-position" on-tap="_closeDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+        <div class="contianer">
+            <section>
+                <section class="number">
+                    [[currentNumber]]
+                </section>
+            </section>
+        </div>
+    </paper-dialog>
+    </section>
     </template>
     <script>
-    class MyView1 extends Polymer.Element {
-        static get is() {
-            return 'my-view1';
-        }
+        class MyView1 extends Polymer.Element {
+            static get is() {
+                return 'my-view1';
+            }
 
-        static get properties() {
-            return {
-                numbers: {
-                    type: Array,
-                    value() {
-                        return ['0', '1/2', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?'];
+            static get properties() {
+                return {
+                    numbers: {
+                        type: Array,
+                        value() {
+                            return ['0', '1/2', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?'];
+                        }
+                    },
+                    currentNumber: {
+                        type: String
                     }
-                },
-                currentNumber: {
-                    type: String
                 }
             }
-        }
 
-        _openDialog(e) {
-            this.set('currentNumber', e.model.number);
-            this.$.dialog.open();
-        }
+            _openDialog(e) {
+                this.set('currentNumber', e.model.number);
+                this.$.dialog.open();
+            }
 
-        _closeDialog(e) {
-            this.set('currentNumber', '');
-            this.$.dialog.close();
+            _closeDialog(e) {
+                this.set('currentNumber', '');
+                this.$.dialog.close();
+            }
         }
-    }
-    window.customElements.define(MyView1.is, MyView1);
+        window.customElements.define(MyView1.is, MyView1);
     </script>
 </dom-module>
